@@ -21,11 +21,11 @@ export const routes: Routes = [
         component:AuthentificationComponent
     },
     {
-        path:'accueil-etu',
-        component:AccueilEtuComponent
-    },
-    {
         path:'accueil-ens',
         component:AccueilEnsComponent
+    },
+    {
+        path:'accueil-etu',
+        component:AccueilEtuComponent
     }
 ];
