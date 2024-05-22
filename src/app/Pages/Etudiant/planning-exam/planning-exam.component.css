@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #F1F3F4;
+  }
+  
+  .sidebar {
+    background-color: #002B5B;
+    color: #F1F3F4;
+    height: 100vh;
+    width: 200px;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+
+  .sidebar p{
+    
+    color: #FF7F11;
+     margin-left: 11%;
+     font-size: 32px;
+   }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 10px;
+  }
+  
+  .sidebar ul li a {
+    color: #F1F3F4;
+    text-decoration: none;
+  }
+  
+  .content {
+    margin-left: 200px;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #002B5B;
+  }
+  
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .exam {
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .exam h3 {
+    color: #002B5B;
+    margin-bottom: 5px;
+  }
+
+  .options {
+    margin-bottom: 20px;
+  }
+  
+  .option {
+    margin-bottom: 10px;
+  }
+  
+  .option label {
+    display: block;
+    margin-bottom: 5px;
+    color: #002B5B;
+  }
+  
+  .option select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .sdb:hover {
+    background-color: #FF7F11;
+  }
+
+  .btn {
+    background-color: #F1F3F4;
+    color: #3498db;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+}
+
+.btn:hover {
+    background-color: #FF7F11;
+}
+  
+.footer{
+    margin-top: 190%;
+    margin-left: 11%;
+}
+
+.group1{
+    margin-top: 20%;
+  }

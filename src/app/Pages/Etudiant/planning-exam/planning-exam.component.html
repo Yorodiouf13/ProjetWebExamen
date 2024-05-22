@@ -1,1 +1,62 @@
-<p>planning-exam works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning des Examens</title>
+  <link rel="stylesheet" href="planning-exam.component.css">
+</head>
+<body>
+  <div class="sidebar">
+    <p>G.Examen</p>
+    <ul class="group1">
+      <li><a href="planning-exam" class="sdb">Planning</a></li>
+      <li><a href="jour-exam"  class="sdb">Jour d'examen</a></li>
+      <li><a href="resultats"  class="sdb">Résultats</a></li>
+    </ul>
+
+    <footer class="footer">
+        <a href="accueil-general" class="btn">Se déconnecter</a>
+    </footer>
+  </div>
+  <div class="content">
+    <h1>Planning des Examens</h1>
+
+    <div class="options">
+        <div class="option">
+          <label for="classe">Choisir la classe :</label>
+          <select id="classe">
+            <option value="GLSIA">GLSIA</option>
+            <option value="GLSIB">GLSIB</option>
+            <option value="DIC1">DIC1</option>
+            <!-- Ajoutez d'autres options de classe au besoin -->
+          </select>
+        </div>
+        <div class="option">
+          <label for="semestre">Choisir le semestre :</label>
+          <select id="semestre">
+            <option value="1">Semestre 1</option>
+            <option value="2">Semestre 2</option>
+            <!-- Ajoutez d'autres options de semestre au besoin -->
+          </select>
+        </div>
+      </div>
+
+    <div class="calendar">
+      <div class="exam">
+        <h3>Mathématiques</h3>
+        <p>Date : 12/05/2024</p>
+        <p>Heure de début : 09:00</p>
+        <p>Heure de fin : 11:00</p>
+      </div>
+      <div class="exam">
+        <h3>Français</h3>
+        <p>Date : 15/05/2024</p>
+        <p>Heure de début : 14:00</p>
+        <p>Heure de fin : 16:00</p>
+      </div>
+      
+    </div>
+  </div>
+</body>
+</html>
