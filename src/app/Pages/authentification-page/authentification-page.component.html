@@ -1,32 +1,35 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title></title>
+    <title>page authentification</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="authentification-page.component.css">
     
 </head>
-<body>
+<body> -->
     <!-- <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>
     </div> -->
-    <form>
-        <h3>Connexion</h3>
+    <div>
+        <form (ngSubmit)="onloginobj()" novalidate>
+            <h3>Connexion</h3>
+    
+            <label for="Email">Email</label>
+            <input type="text" name="Email" [(ngModel)]=" loginobj.Email" placeholder="....." />
+    
+            <label for="Password">Mot de passe</label>
+            <input type="password" name="Password"  [(ngModel)]=" loginobj.Password"  placeholder="....." />
+    
+            <button type="submit" >Se connecter</button>
+    
+            
+        </form>
+    </div>
 
-        <label for="Email">Email</label>
-        <input type="text" name="Email" [(ngModel)]=" loginobj.Email" placeholder="....." />
+<!-- </body>
 
-        <label for="Password">Mot de passe</label>
-        <input type="password" name="Password"  [(ngModel)]=" loginobj.Password"  placeholder="....." />
+</html> -->
 
-        <button type="submit" (click)="onloginobj()" >Se connecter</button>
-
-        
-    </form>
-
-</body>
-
-</html>
 
