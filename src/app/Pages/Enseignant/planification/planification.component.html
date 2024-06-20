@@ -1,0 +1,33 @@
+<body class="container">
+  <div class="sidebar">
+    <p>G.Examen</p>
+    <ul class="group1">
+      <li><a href="planningExam" class="sdb">Planning</a></li>
+      <li><a href="jourExam"  class="sdb">Jour d'examen</a></li>
+      <li><a href="resultats"  class="sdb">Résultats</a></li>
+    </ul>
+
+    <footer class="footer">
+        <a href="accueil-general" class="btn">Se déconnecter</a>
+    </footer>
+  </div>
+    <div class="planification">
+        <h2>Planifier un Examen</h2>
+        <form (ngSubmit)="planExam()">
+          <label for="date">Date:</label>
+          <input type="date" id="date" name="date" [(ngModel)]="exam.date" required>
+          
+          <label for="time">Heure:</label>
+          <input type="time" id="time" name="time" [(ngModel)]="exam.time" required>
+          
+          <label for="subject">Matière:</label>
+          <input type="text" id="subject" name="subject" [(ngModel)]="exam.subject" required>
+          
+          <label for="class">Classe:</label>
+          <input type="text" id="class" name="class" [(ngModel)]="exam.class" required>
+          
+          <button type="submit">Planifier</button>
+        </form>
+      </div>
+      
+</body>
