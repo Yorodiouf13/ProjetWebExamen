@@ -1,1 +1,25 @@
-<p>resultats works!</p>
+<body class="container">
+    
+    <div class="sidebar">
+        <p>G.Examen</p>
+        <ul class="group1">
+          <li><a href="planningExam" class="sdb">Planning</a></li>
+          <li><a href="jourExam"  class="sdb">Jour d'examen</a></li>
+          <li><a href="resultats"  class="sdb">Résultats</a></li>
+        </ul>
+    
+        <footer class="footer">
+            <a href="accueil-general" class="btn">Se déconnecter</a>
+        </footer>
+      </div>
+
+    <div class="resultats">
+        <h2>Résultats des Examens</h2>
+        <div *ngFor="let result of studentResults" class="result-item">
+          <h3>{{ result.subject }} - {{ result.class }}</h3>
+          <p>Note: {{ result.score }}/{{ result.totalScore }}</p>
+          <button (click)="viewCorrection(result.examId)">Voir la Correction</button>
+        </div>
+      </div>
+      
+</body>

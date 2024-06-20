@@ -71,3 +71,84 @@ body {
     margin-top: 190%;
     margin-left: 11%;
   }
+
+  .jour-exam {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .jour-exam h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .student-info-form,
+  .exam-questions {
+    margin-top: 20px;
+  }
+  
+  .student-info-form form,
+  .exam-questions form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .student-info-form label,
+  .exam-questions label {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .student-info-form input,
+  .student-info-form select,
+  .exam-questions input[type="radio"] {
+    font-size: 16px;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .student-info-form button,
+  .exam-questions button {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .student-info-form button:disabled,
+  .exam-questions button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .student-info-form button:hover:not(:disabled),
+  .exam-questions button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  .exam-questions p {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  
+  .exam-questions label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .exam-questions label input {
+    margin-right: 10px;
+  }
+  

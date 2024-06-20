@@ -2,8 +2,8 @@
     <div class="sidebar">
         <p>G.Examen</p>
         <ul class="group1">
-          <li><a href="planning-exam" class="sdb">Planning</a></li>
-          <li><a href="jour-exam"  class="sdb">Jour d'examen</a></li>
+          <li><a href="planningExam" class="sdb">Planning</a></li>
+          <li><a href="jourExam"  class="sdb">Jour d'examen</a></li>
           <li><a href="resultats"  class="sdb">Résultats</a></li>
         </ul>
     
@@ -12,6 +12,48 @@
         </footer>
       </div>
 
-   
+      <div class="jour-exam" *ngIf="!examStarted">
+        <h2>Jour d'Examen</h2>
+        <div class="student-info-form">
+          <form (ngSubmit)="startExam()" #examForm="ngForm">
+            <label for="firstName">Prénom:</label>
+            <input type="text" id="firstName" name="firstName" [(ngModel)]="student.firstName" required>
+            
+            <label for="lastName">Nom:</label>
+            <input type="text" id="lastName" name="lastName" [(ngModel)]="student.lastName" required>
+            
+            <label for="class">Classe:</label>
+            <select id="class" name="class" [(ngModel)]="student.class" (change)="onClassChange()" required>
+              <option *ngFor="let class of classes" [value]="class">{{ class }}</option>
+            </select>
+            
+            <label for="subject">Matière:</label>
+            <select id="subject" name="subject" [(ngModel)]="student.subject" required>
+              <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
+            </select>
+            
+            <button type="submit" [disabled]="!examForm.form.valid">Commencer l'Examen</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="exam-questions" *ngIf="examStarted">
+        <h2>Examen pour {{ student.subject }}</h2>
+        <form (ngSubmit)="submitAnswers()">
+          <div *ngFor="let question of questions; let i = index">
+            <p>{{ question.text }}</p>
+            <div *ngFor="let option of question.options">
+              <label>
+                <input type="radio" [name]="'question' + i" [value]="option" [(ngModel)]="question.selectedAnswer">
+                {{ option }}
+              </label>
+            </div>
+          </div>
+          <button type="submit">Soumettre les Réponses</button>
+        </form>
+      </div>
+      
+
+
   </body>
   
