@@ -32,11 +32,11 @@ export const routes: Routes = [
         component:AccueilEtuComponent
     },
     {
-        path:'planning-exam',
+        path:'planningExam',
         component:PlanningExamComponent
     },
     {
-        path:'jour-exam',
+        path:'jourExam',
         component:JourExamComponent
     },
     {
