@@ -1,0 +1,40 @@
+<body class="container">
+    <div class="sidebar">
+        <p>G.Examen</p>
+        <ul class="group1">
+          <li><a href="planification" class="sdb">planification</a></li>
+          <li><a href="calendrier"  class="sdb">calendrier</a></li>
+          <li><a href="sujet"  class="sdb">sujet</a></li>
+        </ul>
+    
+        <footer class="footer">
+            <a href="accueil-general" class="btn">Se déconnecter</a>
+        </footer>
+      </div>
+    
+      <div class="create-qcm">
+        <h2>Créer un QCM pour {{ subject }}</h2>
+        <form (ngSubmit)="saveQCM()">
+          <div *ngFor="let question of questions; let i = index">
+            <label for="question">Question {{ i + 1 }}:</label>
+            <input type="text" id="question" name="question" [(ngModel)]="question.question" required>
+            <button type="button" (click)="addAnswer(i)">Ajouter Réponse</button>
+            <div *ngFor="let answer of question.answers; let j = index">
+              <label for="answer">Réponse {{ j + 1 }}:</label>
+              <input type="text" id="answer" name="answer" [(ngModel)]="answer.text" required>
+              <label>
+                <input type="checkbox" [(ngModel)]="answer.correct"> Correcte
+              </label>
+              <button type="button" (click)="removeAnswer(i, j)">Supprimer Réponse</button>
+            </div>
+            <button type="button" (click)="removeQuestion(i)">Supprimer Question</button>
+          </div>
+          <button type="button" (click)="addQuestion()">Ajouter Question</button>
+          <button type="submit">Enregistrer</button>
+        </form>
+      </div>
+      
+      
+      
+</body>
+

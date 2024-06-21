@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ExamService } from '../../../services/exam.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,34 +9,33 @@ import { CommonModule } from '@angular/common';
   templateUrl: './sujet.component.html',
   styleUrls: ['./sujet.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule]  // Ajoutez FormsModule ici
+  imports: [FormsModule, CommonModule]
 })
 export class SujetComponent implements OnInit {
-  subjects: any[] = [];
-  newSubject: any = {};
-
-  constructor(private examService: ExamService) {}
+  selectedClasses: string[] = [];
+  subjects: string[] = [];
+  selectedSubject: string = '';
+  classes: string[] = [];
+    
+  constructor(private examService: ExamService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getSubjects();
+    this.getClasses();
   }
 
-  getSubjects(): void {
-    this.examService.getSubjects().subscribe((data: any[]) => {
+  getClasses(): void {
+    this.examService.getClasses().subscribe((data: string[]) => {
+      this.classes = data;
+    });
+  }
+
+  onClassesChange(): void {
+    this.examService.getMatiere(this.selectedClasses).subscribe((data: string[]) => {
       this.subjects = data;
     });
   }
 
-  createSubject(): void {
-    this.examService.createSubject(this.newSubject).subscribe(response => {
-      this.subjects.push(response);
-      this.newSubject = {};
-    });
-  }
-
-  deleteSubject(subjectId: string): void {
-    this.examService.deleteSubject(subjectId).subscribe(response => {
-      this.subjects = this.subjects.filter(subject => subject.id !== subjectId);
-    });
+  createQCM(): void {
+    this.router.navigate(['/create-qcm'], { queryParams: { classes: this.selectedClasses, subject: this.selectedSubject } });
   }
 }

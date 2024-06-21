@@ -2,37 +2,32 @@
     <div class="sidebar">
         <p>G.Examen</p>
         <ul class="group1">
-          <li><a href="planningExam" class="sdb">Planning</a></li>
-          <li><a href="jourExam"  class="sdb">Jour d'examen</a></li>
-          <li><a href="resultats"  class="sdb">Résultats</a></li>
+          <li><a href="planification" class="sdb">planification</a></li>
+          <li><a href="calendrier"  class="sdb">calendrier</a></li>
+          <li><a href="sujet"  class="sdb">sujet</a></li>
         </ul>
     
         <footer class="footer">
             <a href="accueil-general" class="btn">Se déconnecter</a>
         </footer>
       </div>
-    <div class="sujet">
-        <h2>Gérer les Sujets d'Examen</h2>
-        
-        <h3>Créer un Nouveau Sujet</h3>
-        <form (ngSubmit)="createSubject()">
+    
+      <div class="sujet">
+        <h2>Créer un Nouveau Sujet</h2>
+        <form (ngSubmit)="createQCM()">
+          <label for="classes">Classes:</label>
+          <select id="classes" name="classes" [(ngModel)]="selectedClasses" (change)="onClassesChange()" multiple required>
+            <option *ngFor="let class of classes" [value]="class">{{ class }}</option>
+          </select>
+          
           <label for="subject">Matière:</label>
-          <input type="text" id="subject" name="subject" [(ngModel)]="newSubject.subject" required>
-          
-          <label for="class">Classe:</label>
-          <input type="text" id="class" name="class" [(ngModel)]="newSubject.class" required>
-          
-          <label for="questions">Questions:</label>
-          <textarea id="questions" name="questions" [(ngModel)]="newSubject.questions" required></textarea>
+          <select id="subject" name="subject" [(ngModel)]="selectedSubject" required>
+            <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
+          </select>
           
           <button type="submit">Créer</button>
         </form>
-      
-        <h3>Liste des Sujets</h3>
-        <div *ngFor="let subject of subjects" class="subject-item">
-          <h4>{{ subject.subject }} - {{ subject.class }}</h4>
-          <button (click)="deleteSubject(subject.id)">Supprimer</button>
-        </div>
       </div>
+      
       
 </body>

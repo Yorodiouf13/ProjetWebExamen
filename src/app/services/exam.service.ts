@@ -10,8 +10,24 @@ export class ExamService {
 
   constructor(private http: HttpClient) {}
 
+  getClasses(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/classes`);
+  }
+
   planExam(exam: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/exams/plan`, exam);
+    return this.http.post<any>(`${this.apiUrl}/exams`, exam);
+  }
+
+  getFutureExams(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/exams/future`);
+  }
+
+  deleteExam(examId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/exams/${examId}`);
+  }
+
+  updateExam(exam: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/exams/${exam.id}`, exam);
   }
   
   getExams(): Observable<any[]> {
@@ -22,18 +38,23 @@ export class ExamService {
     return this.http.post<any>(this.apiUrl, exam);
   }
 
-  getClasses(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/classes`);
-  }
-
   getSubject(classParam: string): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/subjects?class=${classParam}`);
   }
+
+  getMatiere(classes: string[]): Observable<string[]> {
+    const params = { classes: classes.join(',') };
+    return this.http.get<string[]>(`${this.apiUrl}/subjects`, { params });
+  }
+
 
   getSubjects(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/subjects`);
   }
 
+  saveQCM(qcmData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/qcm`, qcmData);
+  }
   createSubject(subject: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/subjects`, subject);
   }
