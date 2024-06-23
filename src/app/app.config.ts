@@ -7,14 +7,19 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExamService } from './services/exam.service';
+import { PlanificationService } from './services/planification.service';
+import { SujetService } from './services/sujet.service';
+import { QcmService } from './services/qcm.service';
+import { CalendarService } from './services/calendar.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideClientHydration(),
-    importProvidersFrom(BrowserModule, FullCalendarModule, HttpClientModule, BrowserAnimationsModule, ExamService, FormsModule, NgModule)
+    provideHttpClient(withFetch()),
+    importProvidersFrom(BrowserModule, FullCalendarModule, HttpClientModule, BrowserAnimationsModule, ExamService, FormsModule, ReactiveFormsModule, PlanificationService, SujetService, QcmService, CalendarService)
   ]
 };

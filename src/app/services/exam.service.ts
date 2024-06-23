@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ExamService {
-  private apiUrl = 'http://localhost:3002/api/exams';
+  private apiUrl = 'http://localhost:3002/';
 
   constructor(private http: HttpClient) {}
 
@@ -51,10 +51,7 @@ export class ExamService {
   getSubjects(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/subjects`);
   }
-
-  saveQCM(qcmData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/qcm`, qcmData);
-  }
+  
   createSubject(subject: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/subjects`, subject);
   }
@@ -78,7 +75,9 @@ export class ExamService {
   getExamCorrection(examId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/corrections?examId=${examId}`);
   }
-
+  getSubjectsByClass(classId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/classes/${classId}/subjects`);
+  }
 }
 
 export interface Question {

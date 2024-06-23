@@ -1,47 +1,80 @@
+
 <body class="container">
-  <div class="sidebar">
+
+  
+  <div class="sidebar" ngSkipHydration>
     <p>G.Examen</p>
     <ul class="group1">
       <li><a href="planification" class="sdb">planification</a></li>
-      <li><a href="calendrier"  class="sdb">calendrier</a></li>
-      <li><a href="sujet"  class="sdb">sujet</a></li>
+      <li><a href="calendrier" class="sdb">calendrier</a></li>
+      <li><a href="sujet" class="sdb">sujet</a></li>
     </ul>
-
     <footer class="footer">
-        <a href="accueil-general" class="btn">Se déconnecter</a>
+      <a href="accueil-general" class="btn">Se déconnecter</a>
     </footer>
   </div>
-  <div class="planification">
+
+  <div class="planification" ngSkipHydration>
     <h2>Planifier un Examen</h2>
-    <form (ngSubmit)="planExam()">
-      <label for="classes">Classes:</label>
-      <select id="classes" name="classes" [(ngModel)]="selectedClasses" (change)="onClassesChange()" multiple required>
-        <option *ngFor="let class of classes" [value]="class">{{ class }}</option>
+    <form [formGroup]="planForm" (ngSubmit)="onSubmit()" >
+      <label for="classes">Classes</label>
+      <select id="classIds" formControlName="classIds" (change)="onClassChange()">
+        <option value="">Veuillez choisir une Classe</option>
+        <option *ngFor="let class of classes" [value]="class._id">{{ class.name }}</option>
       </select>
       
-      <label for="subject">Matière:</label>
-      <select id="subject" name="subject" [(ngModel)]="exam.subject" required>
-        <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
+      <label for="matiere">Matière</label>
+      <select id="matiereId" formControlName="matiereId">
+        <option value="">Veuillez choisir une Matiere</option>
+        <option *ngFor="let matiere of matieres" [value]="matiere._id">{{ matiere.name }}</option>
       </select>
-  
-      <label for="date">Date:</label>
-      <input type="date" id="date" name="date" [(ngModel)]="exam.date" required>
-      
-      <label for="time">Heure:</label>
-      <input type="time" id="time" name="time" [(ngModel)]="exam.time" required>
-      
-      <button type="submit">Planifier</button>
+
+      <label for="date">Date</label>
+      <input id="date" type="date" formControlName="date">
+
+      <label for="time">Time</label>
+      <input id="time" type="time" formControlName="time">
+
+      <button type="submit">Plan Exam</button>
     </form>
-  
-    <h2>Historique des Examens Planifiés</h2>
-    <div *ngFor="let exam of exams" class="exam-item">
-      <h3>{{ exam.subject }} - {{ exam.classes.join(', ') }}</h3>
-      <p>Date: {{ exam.date }}</p>
-      <p>Heure: {{ exam.time }}</p>
-      <button (click)="deleteExam(exam.id)">Supprimer</button>
-      <button (click)="updateExam(exam)">Modifier</button>
-    </div>
   </div>
+
+  <div class="future" ngSkipHydration>
+    <h3>Future Exams</h3>
+    <ul *ngFor="let exam of futureExams">
+      <li>
+        <div class="exam-info">
+          {{ exam.class }} - {{ exam.matiere }} - {{ exam.date | date }} - {{ exam.time }}
+        </div>
+        <div class="exam-actions">
+          <button (click)="onDelete(exam._id)">Delete</button>
+          <button (click)="onEdit(exam)">Edit</button>
+        </div>
+      </li>
+
+        <div *ngIf="editingExam && editingExam._id === exam._id" class="edit-modal">
+          <form [formGroup]="editForm" (ngSubmit)="onUpdate(exam)">
+            <label for="classes">Classes</label>
+            <select id="classIds" formControlName="classIds" (change)="onClassChange()">
+              <option *ngFor="let class of classes" [value]="class._id">{{ class.name }}</option>
+            </select>
   
-      
+            <label for="matiere">Matière</label>
+            <select id="matiereId" formControlName="matiereId">
+              <option *ngFor="let matiere of matieres" [value]="matiere._id">{{ matiere.name }}</option>
+            </select>
+  
+            <label for="date">Date</label>
+            <input id="date" type="date" formControlName="date">
+  
+            <label for="time">Time</label>
+            <input id="time" type="time" formControlName="time">
+  
+            <button type="submit">Save</button>
+            <button type="button" (click)="onCancelEdit()">Cancel</button>
+          </form>
+        </div>
+    </ul>
+  </div>
+
 </body>

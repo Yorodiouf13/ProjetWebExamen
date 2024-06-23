@@ -1,66 +1,136 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ExamService } from '../../../services/exam.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PlanificationService } from '../../../services/planification.service';
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-planification',
   templateUrl: './planification.component.html',
   styleUrls: ['./planification.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule]  // Ajoutez FormsModule ici
+  imports: [ReactiveFormsModule, CommonModule],
 })
+
 export class PlanificationComponent implements OnInit {
-  exam: any = { classes: [], subject: '', date: '', time: '' };
-  classes: string[] = [];
-  subjects: string[] = [];
-  exams: any[] = [];
-  selectedClasses: string[] = [];
+  planForm: FormGroup;
+  editForm: FormGroup;
+  classes: any[] = []; 
+  matieres: any[] = [];
+  futureExams: any[] = [];
+  editingExam: any = null;
 
-  constructor(private examService: ExamService) {}
+  constructor(
+    private fb: FormBuilder,
+    private planificationService: PlanificationService,
+  ) {
+    this.planForm = this.fb.group({
+      classIds: ['', Validators.required],
+      matiereId: ['', Validators.required],
+      date: ['', Validators.required],
+      time: ['', Validators.required]
+    });
 
-  ngOnInit(): void {
-    this.getClasses();
-    this.getExams();
+    this.editForm = this.fb.group({
+      classIds: ['', Validators.required],
+      matiereId: ['', Validators.required],
+      date: ['', Validators.required],
+      time: ['', Validators.required]
+    });
   }
 
-  getClasses(): void {
-    this.examService.getClasses().subscribe((data: string[]) => {
+  ngOnInit(): void {
+    this.loadClasses();
+    this.loadFutureExams();
+  }
+
+  loadClasses(): void {
+    this.planificationService.getClasses().subscribe((data: any[]) => {
       this.classes = data;
     });
   }
 
-  onClassesChange(): void {
-    this.examService.getMatiere(this.selectedClasses).subscribe((data: string[]) => {
-      this.subjects = data;
+  // onClassChange(): void {
+  //   const selectedClasses = this.planForm.get('classIds')?.value;
+  //   if (selectedClasses.length > 0) {
+  //     this.planificationService.getMatiere(selectedClasses).subscribe((data: any[]) => {
+  //       this.matieres = data;
+  //     });
+  //   }
+  //   // else {
+  //   //   this.matieres = [];
+  //   // }
+  // }
+
+  onClassChange(): void {
+    let selectedClasses = this.planForm.get('classIds')?.value;
+    // console.log('Selected classes (raw):', selectedClasses);  
+    if (!Array.isArray(selectedClasses)) {
+      selectedClasses = [selectedClasses];  
+    }
+    if (selectedClasses && Array.isArray(selectedClasses)) {
+      // console.log('Selected classes (array):', selectedClasses);
+      this.planificationService.getMatieres(selectedClasses).subscribe((data: any[]) => {
+        this.matieres = data;
+        // console.log('Matieres loaded:', this.matieres);  
+      });
+    } else {
+      // console.error('Selected classes is not an array:', selectedClasses);
+      this.matieres = [];
+    }
+  }
+
+  loadFutureExams(): void {
+    // console.log('entrer dans loadFutureExams()');
+    this.planificationService.getFutureExams().subscribe((data: any[]) => {
+      // console.log('Exams loaded:', data);
+      this.futureExams = data;
     });
   }
 
-  planExam(): void {
-    this.exam.classes = this.selectedClasses;
-    this.examService.planExam(this.exam).subscribe(response => {
-      console.log('Examen planifié avec succès', response);
-      this.getExams(); // Mettre à jour la liste des examens après en avoir planifié un nouveau
+  onSubmit(): void {
+    if (this.planForm.valid) {
+      console.log('Form submitted:', this.planForm.value);
+      let exam = {...this.planForm.value };
+      this.planificationService.planExam(exam).subscribe(response => {
+        console.log('Exam planifié avec succès:', response);
+        this.loadFutureExams();
+        this.planForm.reset();
+      });
+    }
+  }
+
+  onDelete(examId: string): void {
+    console.log('entrer dans onDelete()');
+    this.planificationService.deleteExam(examId).subscribe(() => {
+      console.log('Examen supprimé avec succès');
+      this.loadFutureExams();
     });
   }
 
-  getExams(): void {
-    this.examService.getFutureExams().subscribe((data: any[]) => {
-      this.exams = data;
+  onEdit(exam: any): void {
+    this.editingExam = exam;
+    this.editForm.patchValue({
+      classIds: this.planForm.get('classIds')?.value,
+      matiereId: this.planForm.get('matiereId')?.value,
+      date: exam.date,
+      time: exam.time
     });
+  }
+  onUpdate(exam: any): void {
+    if (exam._id) {
+      console.log('Updating exam:', exam);  // Log pour vérifier les données
+      this.planificationService.updateExam(exam).subscribe(() => {
+        this.loadFutureExams();
+      });
+    } else {
+      console.error('exam._id is undefined');
+    }
   }
 
-  deleteExam(examId: string): void {
-    this.examService.deleteExam(examId).subscribe(response => {
-      console.log('Examen supprimé avec succès', response);
-      this.getExams(); // Mettre à jour la liste des examens après en avoir supprimé un
-    });
+  onCancelEdit(): void {
+    this.editingExam = null;
+    this.editForm.reset();
   }
 
-  updateExam(exam: any): void {
-    this.examService.updateExam(exam).subscribe(response => {
-      console.log('Examen mis à jour avec succès', response);
-      this.getExams(); // Mettre à jour la liste des examens après en avoir mis à jour un
-    });
-  }
 }

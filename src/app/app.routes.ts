@@ -7,7 +7,7 @@ import { PlanningExamComponent } from './Pages/Etudiant/planning-exam/planning-e
 import { JourExamComponent } from './Pages/Etudiant/jour-exam/jour-exam.component';
 import { ResultatsComponent } from './Pages/Etudiant/resultats/resultats.component';
 import { PlanificationComponent } from './Pages/Enseignant/planification/planification.component';
-import { CalendrierComponent } from './Pages/Enseignant/calendrier/calendrier.component';
+import { CalendarComponent } from './Pages/Enseignant/calendrier/calendrier.component';
 import { SujetComponent } from './Pages/Enseignant/sujet/sujet.component';
 
 
@@ -52,8 +52,9 @@ export const routes: Routes = [
     },
     { 
         path: 'calendrier', 
-        component: CalendrierComponent 
+        component: CalendarComponent  
     },
+    
     { 
         path: 'sujet', 
         component: SujetComponent

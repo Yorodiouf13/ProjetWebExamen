@@ -1,4 +1,4 @@
-<body class="container">
+<body class="container" ngSkipHydration>
     <div class="sidebar">
         <p>G.Examen</p>
         <ul class="group1">
@@ -12,7 +12,7 @@
         </footer>
       </div>
 
-      <div class="jour-exam" *ngIf="!examStarted">
+      <!-- <div class="jour-exam" *ngIf="!examStarted">
         <h2>Jour d'Examen</h2>
         <div class="student-info-form">
           <form (ngSubmit)="startExam()" #examForm="ngForm">
@@ -35,9 +35,9 @@
             <button type="submit" [disabled]="!examForm.form.valid">Commencer l'Examen</button>
           </form>
         </div>
-      </div>
+      </div> -->
       
-      <div class="exam-questions" *ngIf="examStarted">
+      <!-- <div class="exam-questions" *ngIf="examStarted">
         <h2>Examen pour {{ student.subject }}</h2>
         <form (ngSubmit)="submitAnswers()">
           <div *ngFor="let question of questions; let i = index">
@@ -51,7 +51,40 @@
           </div>
           <button type="submit">Soumettre les Réponses</button>
         </form>
+      </div> -->
+
+      <form [formGroup]="examForm" (ngSubmit)="onSubmit()">
+        <label for="firstName">First Name</label>
+        <input id="firstName" formControlName="firstName">
+      
+        <label for="lastName">Last Name</label>
+        <input id="lastName" formControlName="lastName">
+      
+        <label for="classId">Class</label>
+        <select id="classId" formControlName="classId" (change)="onClassChange($event)">
+          <option *ngFor="let class of classes" [value]="class._id">{{ class.name }}</option>
+        </select>
+      
+        <label for="subjectId">Subject</label>
+        <select id="subjectId" formControlName="subjectId">
+          <option *ngFor="let subject of subjects" [value]="subject._id">{{ subject.name }}</option>
+        </select>
+      
+        <button type="submit">Start Exam</button>
+      </form>
+      
+      <div *ngIf="qcm">
+        <h3>Questions</h3>
+        <div *ngFor="let question of qcm.questions">
+          <p>{{ question.questionText }}</p>
+          <div *ngFor="let option of question.options">
+            <label>
+              <input type="radio" [name]="question._id" [value]="option.text"> {{ option.text }}
+            </label>
+          </div>
+        </div>
       </div>
+      
       
 
 

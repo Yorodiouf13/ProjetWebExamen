@@ -1,4 +1,4 @@
-<body class="container">
+<body class="container" ngSkipHydration>
     <div class="sidebar">
         <p>G.Examen</p>
         <ul class="group1">
@@ -13,11 +13,8 @@
       </div>
       <div class="calendrier">
         <h2>Emploi du Temps</h2>
-        <div *ngFor="let exam of exams" class="exam-item">
-          <h3>{{ exam.subject }} - {{ exam.class }}</h3>
-          <p>Date: {{ exam.date }}</p>
-          <p>Heure: {{ exam.time }}</p>
-        </div>
+         <full-calendar [events]="events"></full-calendar>
       </div>
+      
       
 </body>

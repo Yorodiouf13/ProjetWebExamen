@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ExamService } from '../../../services/exam.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SujetService } from '../../../services/sujet.service';
 
 @Component({
   selector: 'app-sujet',
@@ -17,20 +17,20 @@ export class SujetComponent implements OnInit {
   selectedSubject: string = '';
   classes: string[] = [];
     
-  constructor(private examService: ExamService, private router: Router) {}
+  constructor(private sujetService: SujetService, private router: Router) {}
 
   ngOnInit(): void {
     this.getClasses();
   }
 
   getClasses(): void {
-    this.examService.getClasses().subscribe((data: string[]) => {
+    this.sujetService.getClasses().subscribe((data: string[]) => {
       this.classes = data;
     });
   }
 
   onClassesChange(): void {
-    this.examService.getMatiere(this.selectedClasses).subscribe((data: string[]) => {
+    this.sujetService.getMatiere(this.selectedClasses).subscribe((data: string[]) => {
       this.subjects = data;
     });
   }
